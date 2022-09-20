@@ -1,7 +1,7 @@
-ï»¿/*
+/*
  * loop.h
  *
- * Created: 2022-09-21 ì˜¤ì „ 1:27:06
+ * Created: 2022-09-21 ¿ÀÀü 1:27:06
  *  Author: hyu-nani
  */ 
 #ifndef LOOP_H_

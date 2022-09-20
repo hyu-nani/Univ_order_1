@@ -6,37 +6,88 @@
  */ 
 
 #include "hardware.h"
-// 초음파 센서의 거리값이 distance Criterion 이상인가
-int distanceCriterion = 10;
+// Is it above the distance criterion?
+int maximumDistance = 200;//[mm]
+int minimumDistance = 10;//[mm]
+
+
+//interrupt time setting
 long nowTime = millis();
 long preTime = nowTime;
 
 
-#include "loop.h"// 메인 순환구조 분할
+/*
+brief : check distance
+note  :	SR04
+param :	
+return: distance
+*/
 float sensingSR04()
 {
 	float duration, distance;
 	digitalWrite(trigPin, LOW);
 	digitalWrite(echoPin, LOW);
 	delayMicroseconds(2);
-	//초음파 발생
+	//generate ultra wave sound
 	digitalWrite(trigPin, HIGH);
 	delayMicroseconds(10);
 	digitalWrite(trigPin, LOW);
-	//echo 핀이 high를 유지한 시간을 저장
+	//save the time when this change the high of echo pin 
 	duration = pulseln(echoPin, HIGH);
-	//계산 단위(mm)
+	//calculate (mm)
 	distance = ((float)(340 * duration) / 1000) / 2;
 	return distance;	
 }
 
-void setup()
-{
-	Serial.begin(9600);
-	hardWareInit();
+/*
+brief : turn up LED bar
+note  :	0% ~ 100%
+param :	percentage
+return:
+*/
+void showLED(int percentage)
+{	
+	//check range over
+	percentage = (percentage < 0) ? 0 : percentage;
+	percentage = (percentage > 100) ? 100 : percentage;
+	//turn off all led
+	for(int i=0; i<8 ; i++)
+	digitalWrite(LED[i], LOW);
+	//turn on led
+	for(int i=0; i<100*8/percentage;i++)
+	digitalWrite(LED[i], HIGH);
+	delay(10);
 }
 
+/*
+brief : rotating the motor in the specified direction
+note  :	
+param :	move angle , direction
+return: 
+*/
+void moveStepMotor(float angle, bool direct)
+{
+	if(direct)//clockwise
+	{
+		
+	}
+	else//counterclockwise
+	{
+		
+	}
+}
+
+//base on arduino 
+void setup()
+{
+	//serial start
+	Serial.begin(9600);
+	//board initial setting
+	hardWareInit();
+}
+#include "loop.h"// separate loop
 void loop()
 {
-	 mainLoop();
+	//loop.h
+	mainLoop();
 }
