@@ -4,46 +4,38 @@
  * Created: 9/21/2022 1:11:35 AM
  * Author: hyu-nani
  */ 
+#include "variables.h" // all variables 
+#include "hardware.h" // set the hardware
 
-#include "hardware.h"
-// Is it above the distance criterion?
-int maximumDistance = 200;//[mm]
-int minimumDistance = 10;//[mm]
-
-
-//interrupt time setting
-long nowTime = millis();
-long preTime = nowTime;
-
-
-/*
-brief : check distance
-note  :	SR04
-param :	
-return: distance
+/**
+* brief : check distance
+* note  :	SR04 ultrasonic sensor
+* param :	
+* return: distance
 */
 float sensingSR04()
 {
-	float duration, distance;
+	float duration=0, distance=0;
 	digitalWrite(trigPin, LOW);
-	digitalWrite(echoPin, LOW);
-	delayMicroseconds(2);
-	//generate ultra wave sound
+	delayMicroseconds(10);
+	//generate ultrasonic 
 	digitalWrite(trigPin, HIGH);
 	delayMicroseconds(10);
 	digitalWrite(trigPin, LOW);
 	//save the time when this change the high of echo pin 
-	duration = pulseln(echoPin, HIGH);
+	duration = pulseIn(echoPin, HIGH);
 	//calculate (mm)
-	distance = ((float)(340 * duration) / 1000) / 2;
+	distance = (float)((340 * duration) / 1000) / 2;
+	Serial.print(distance);
+	Serial.print("/");
 	return distance;	
 }
 
-/*
-brief : turn up LED bar
-note  :	0% ~ 100%
-param :	percentage
-return:
+/**
+* brief : turn up LED bar
+* note  :	0% ~ 100%
+* param :	percentage
+* return:
 */
 void showLED(int percentage)
 {	
@@ -51,41 +43,30 @@ void showLED(int percentage)
 	percentage = (percentage < 0) ? 0 : percentage;
 	percentage = (percentage > 100) ? 100 : percentage;
 	//turn off all led
-	for(int i=0; i<8 ; i++)
-	digitalWrite(LED[i], LOW);
+	for(int i=0; i < 8 ; i++)
+	{
+		digitalWrite(LED[i], LOW);
+	}
 	//turn on led
-	for(int i=0; i<100*8/percentage;i++)
-	digitalWrite(LED[i], HIGH);
+	float num = map(percentage,0,100,0,8);
+	for(int i=0; i<num;i++)
+	{
+		digitalWrite(LED[i], HIGH);
+	}
 	delay(10);
 }
 
-/*
-brief : rotating the motor in the specified direction
-note  :	
-param :	move angle , direction
-return: 
-*/
-void moveStepMotor(float angle, bool direct)
-{
-	if(direct)//clockwise
-	{
-		
-	}
-	else//counterclockwise
-	{
-		
-	}
-}
+#include "loop.h"
 
 //base on arduino 
 void setup()
 {
 	//serial start
-	Serial.begin(9600);
+	Serial.begin(115200);
 	//board initial setting
 	hardWareInit();
 }
-#include "loop.h"// separate loop
+
 void loop()
 {
 	//loop.h
