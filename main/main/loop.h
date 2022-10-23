@@ -7,11 +7,14 @@
 
 void mainLoop()
 {
-	float trashDistance = sensingSR04();
-    float difference = (maximumDistance-minimumDistance);
-    float test = 100 - ((trashDistance-minimumDistance)/difference*100);
-    Serial.println(test);
-    showLED(test);
+	//float trashDistance = sensingSR04();
+    //float difference = (maximumDistance-minimumDistance);
+    //float test = 100 - ((trashDistance-minimumDistance)/difference*100);
+    //Serial.println(test);
+    //showLED(test);
+    //Serial.println(analogRead(rainSense));
+    moveStep(90,true,70);
+    delay(1000);
     /*
     if(trigerPercentage > trashDistance*100/(maximumDistance-minimumDistance))
     {

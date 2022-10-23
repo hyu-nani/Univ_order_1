@@ -3,7 +3,8 @@
  *
  * Created: 9/21/2022 1:11:35 AM
  * Author: hyu-nani
- */ 
+ */
+#include "math.h" 
 #include "variables.h" // all variables 
 #include "hardware.h" // set the hardware
 

@@ -9,8 +9,9 @@
 #define trigPin 5 //SR-04 Trig pin
 #define echoPin 6 //SR-04 Echo pin
 
-#define stepPin 10 //step motor step pin
-#define dirPin 11 //step motor direct pin
+#define stepPin 3 //step motor step pin
+#define dirPin 2 //step motor direct pin
+#define enPin 4 //Enable motor driver
 
 #define rainSense A0 //rainning sensor
 
@@ -28,6 +29,8 @@ void hardWareInit()
 	//SR-04
 	pinMode(trigPin, OUTPUT);
 	pinMode(echoPin, INPUT);
+	pinMode(enPin, OUTPUT);
+
 	//step moter
 	pinMode(stepPin, OUTPUT);
 	pinMode(dirPin, OUTPUT);
@@ -38,6 +41,8 @@ void hardWareInit()
 	
 	//rain sensor
 	pinMode(rainSense, INPUT);
+
+	//digitalWrite(enPin, HIGH);
 }
 
 /**
@@ -48,24 +53,28 @@ void hardWareInit()
  */
 void moveStep(float angle, bool direction, int speed)
 {
+	digitalWrite(enPin, LOW);
 	int stepCount = angle / 1.8;
-	speed = (speed > 100) ? 100 : speed;
-	speed = (speed < 0) ? 0 : speed;
-	if(speed > 100)
-	speed = 100;
-	// driver max speed [ rpm = 1200 ]
-	float stepDelay =  2.5 / (speed*100);
-
+	
+	// driver max speed [ rpm = 1200 ] 속도제어 문제 발생
+	float stepDelay = sqrt(100 / speed);
+	stepDelay = (stepDelay > 10) ? 10 : stepDelay;
+	stepDelay = (stepDelay < 1) ? 1 : stepDelay;
+	Serial.println(stepDelay);
 	//setting direction
 	if(direction)
 	digitalWrite(dirPin, HIGH);
 	else
 	digitalWrite(dirPin, LOW);
-	for(int i=0; i< stepCount; i++)
+	delay(1);
+	for(int i=0; i< stepCount*2 ; i+=1)
 	{
 		digitalWrite(stepPin, HIGH);
-		delay(stepDelay);
+		delay(0.01);
 		digitalWrite(stepPin, LOW);
 		delay(stepDelay);
 	}
+	delay(1);
+	//Serial.println("done");
+	digitalWrite(enPin, LOW);
 }
