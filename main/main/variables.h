@@ -1,11 +1,15 @@
 // Is it above the distance criterion?
-int maximumDistance = 300;//[mm]
-int minimumDistance = 70;//[mm]
+float maximumDistance = 150;//[mm]
+float minimumDistance = 70;//[mm]
 
-int trigerPercentage = 20;//[%]
+float maximumRainsense = 1020;
+float minimumRainsense = 233;
+
+//trash
+float trigerPercentage = 70;//[%]
 
 //rain sensor 
-int rainPercentage = 20;//[%]
+float rainPercentage = 30;//[%]
 
 // move step motor angle 
 float moveAngle = 180;

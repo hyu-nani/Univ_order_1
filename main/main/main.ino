@@ -27,8 +27,10 @@ float sensingSR04()
 	duration = pulseIn(echoPin, HIGH);
 	//calculate (mm)
 	distance = (float)((340 * duration) / 1000) / 2;
-	Serial.print(distance);
-	Serial.print("/");
+
+	distance = (distance > maximumDistance)? maximumDistance : distance;
+	distance = (distance < minimumDistance)? minimumDistance : distance;
+
 	return distance;	
 }
 
@@ -49,7 +51,7 @@ void showLED(int percentage)
 		digitalWrite(LED[i], LOW);
 	}
 	//turn on led
-	float num = map(percentage,0,100,0,8);
+	float num = map(percentage,0,99,0,8);
 	for(int i=0; i<num;i++)
 	{
 		digitalWrite(LED[i], HIGH);

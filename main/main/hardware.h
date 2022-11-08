@@ -60,7 +60,6 @@ void moveStep(float angle, bool direction, int speed)
 	float stepDelay = sqrt(100 / speed);
 	stepDelay = (stepDelay > 10) ? 10 : stepDelay;
 	stepDelay = (stepDelay < 1) ? 1 : stepDelay;
-	Serial.println(stepDelay);
 	//setting direction
 	if(direction)
 	digitalWrite(dirPin, HIGH);
@@ -70,7 +69,7 @@ void moveStep(float angle, bool direction, int speed)
 	for(int i=0; i< stepCount*2 ; i+=1)
 	{
 		digitalWrite(stepPin, HIGH);
-		delay(0.01);
+		delay(0.05);
 		digitalWrite(stepPin, LOW);
 		delay(stepDelay);
 	}

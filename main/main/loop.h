@@ -7,39 +7,21 @@
 
 void mainLoop()
 {
-	//float trashDistance = sensingSR04();
-    //float difference = (maximumDistance-minimumDistance);
-    //float test = 100 - ((trashDistance-minimumDistance)/difference*100);
-    //Serial.println(test);
-    //showLED(test);
-    //Serial.println(analogRead(rainSense));
-    moveStep(90,true,70);
-    delay(1000);
-    /*
-    if(trigerPercentage > trashDistance*100/(maximumDistance-minimumDistance))
-    {
-        showLED(100);
-        delay(100);
-        showLED(0);
-        delay(100);
-    }
-    else
-    {
-        float test =  trashDistance*100/(maximumDistance-minimumDistance)
-        showLED(test);
-    }
+    float rainSensorValue = 100 - (analogRead(rainSense)-minimumRainsense)/(maximumRainsense-minimumRainsense)*100;
+    float trashPercentage = 100 - (sensingSR04()-minimumDistance)/(maximumDistance-minimumDistance)*100;
     
-    int rainSensorValue = analogRead(rainSense);
-    
-    if(rainPercentage <= rainSensorValue*100/1023)
+    Serial.print("쓰레기 값:");
+    Serial.print(trashPercentage);
+    Serial.print("%\t/ 비 센서:");
+    Serial.print(rainSensorValue);
+    Serial.println("%");
+
+    showLED(trashPercentage);
+    if(rainSensorValue >= rainPercentage)
     {
-        moveStep(moveAngle, true, 50);
+        moveStep(moveAngle, true,20);
+        Serial.println("active motor");
     }
-    else
-    {
-        moveStep(moveAngle, false, 50);
-    }
-    */
 }   
 
 
