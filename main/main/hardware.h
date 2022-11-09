@@ -66,7 +66,7 @@ void moveStep(float angle, bool direction, int speed)
 	else
 	digitalWrite(dirPin, LOW);
 	delay(1);
-	for(int i=0; i< stepCount*2 ; i+=1)
+	for(int i=0; i< stepCount ; i+=1)
 	{
 		digitalWrite(stepPin, HIGH);
 		delay(0.05);

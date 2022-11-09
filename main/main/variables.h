@@ -9,10 +9,10 @@ float minimumRainsense = 233;
 float trigerPercentage = 70;//[%]
 
 //rain sensor 
-float rainPercentage = 30;//[%]
+float rainPercentage = 60;//[%]
 
 // move step motor angle 
-float moveAngle = 180;
+float moveAngle = 270;
 
 // interrupt time setting
 long nowTime = millis();

@@ -5,6 +5,8 @@
  *  Author: hyu-nani
  */ 
 
+bool active = false;
+
 void mainLoop()
 {
     float rainSensorValue = 100 - (analogRead(rainSense)-minimumRainsense)/(maximumRainsense-minimumRainsense)*100;
@@ -17,10 +19,17 @@ void mainLoop()
     Serial.println("%");
 
     showLED(trashPercentage);
-    if(rainSensorValue >= rainPercentage)
+    if(rainSensorValue >= rainPercentage && active == false)
     {
         moveStep(moveAngle, true,20);
         Serial.println("active motor");
+        active = true;
+    }
+    else if( rainSensorValue < rainPercentage-40 && active == true)
+    {
+        moveStep(moveAngle, false,20);
+        Serial.println("reverse motor");
+        active = false;
     }
 }   
 

@@ -40,8 +40,10 @@ float sensingSR04()
 * param :	percentage
 * return:
 */
+float percentageAvg;
 void showLED(int percentage)
 {	
+	percentageAvg =(percentage + (9 * percentageAvg)) / 10;
 	//check range over
 	percentage = (percentage < 0) ? 0 : percentage;
 	percentage = (percentage > 100) ? 100 : percentage;
@@ -51,7 +53,7 @@ void showLED(int percentage)
 		digitalWrite(LED[i], LOW);
 	}
 	//turn on led
-	float num = map(percentage,0,99,0,8);
+	float num = map(percentageAvg,0,99,0,8);
 	for(int i=0; i<num;i++)
 	{
 		digitalWrite(LED[i], HIGH);
