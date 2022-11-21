@@ -51,14 +51,14 @@ void hardWareInit()
  * param : angle, direction( clockwise = true / countclockwise = false), speed(0~100)
  * return: 
  */
-void moveStep(float angle, bool direction, int speed)
+void moveStep(float angle, bool direction, float speed)
 {
 	digitalWrite(enPin, LOW);
 	int stepCount = angle / 1.8;
 	
 	// driver max speed [ rpm = 1200 ] 속도제어 문제 발생
-	float stepDelay = sqrt(100 / speed);
-	stepDelay = (stepDelay > 10) ? 10 : stepDelay;
+	float stepDelay = 100.0 / speed;
+	stepDelay = (stepDelay > 100) ? 100 : stepDelay;
 	stepDelay = (stepDelay < 1) ? 1 : stepDelay;
 	//setting direction
 	if(direction)

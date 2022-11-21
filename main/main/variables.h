@@ -12,7 +12,8 @@ float trigerPercentage = 70;//[%]
 float rainPercentage = 60;//[%]
 
 // move step motor angle 
-float moveAngle = 270;
+float moveAngle = 270;//[Angle]
+float moveSpeed = 30;//[%]
 
 // interrupt time setting
 long nowTime = millis();

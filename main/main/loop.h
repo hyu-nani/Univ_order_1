@@ -14,21 +14,21 @@ void mainLoop()
     
     Serial.print("쓰레기 값:");
     Serial.print(trashPercentage);
-    Serial.print("%\t/ 비 센서:");
+    Serial.print("%\t\t/ 비 센서:");
     Serial.print(rainSensorValue);
     Serial.println("%");
 
     showLED(trashPercentage);
     if(rainSensorValue >= rainPercentage && active == false)
     {
-        moveStep(moveAngle, true,20);
         Serial.println("active motor");
+        moveStep(moveAngle, true, moveSpeed);
         active = true;
     }
     else if( rainSensorValue < rainPercentage-40 && active == true)
     {
-        moveStep(moveAngle, false,20);
         Serial.println("reverse motor");
+        moveStep(moveAngle, false, moveSpeed);
         active = false;
     }
 }   
